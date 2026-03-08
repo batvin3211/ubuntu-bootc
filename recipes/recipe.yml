@@ -19,7 +19,7 @@ modules:
 
  - type: script
    scripts:
-   - zorin-setup.sh
+     - zorin-setup.sh
 
   - type: default-flatpaks
     configurations:
