@@ -6,8 +6,8 @@ name: ubuntu-bootc
 description: This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: docker.io/opensuse/tumbleweed
-image-version: latest # latest is also supported if you want new updates ASAP
+base-image: docker.io/library/ubuntu
+image-version: jammy # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -17,16 +17,9 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  - type: zypper
-    install:
-      packages:
-        - https://download.opensuse.org/repositories/home:zs-ko/openSUSE_Tumbleweed/home:zs-ko.repo
-        - https://download.opensuse.org/repositories/home:tw_rocks_49/openSUSE_Tumbleweed/home:tw_rocks_49.repo
-        - plasma-bigscreen 
-        - steam
-        - steamos-compositor 
-        - nano 
-        - opi 
+ - type: script
+   scripts:
+   - zorin-setup.sh
 
   - type: default-flatpaks
     configurations:
@@ -35,8 +28,6 @@ modules:
         # If no repo information is specified, Flathub will be used by default
         install: # system flatpaks we want all users to have and not remove
           - com.github.iwalton3.jellyfin-media-player 
-          - rocks.shy.VacuumTube 
-          - tv.kodi.Kodi
       - scope: user # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
